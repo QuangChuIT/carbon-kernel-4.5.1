@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="web" name="Web">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/carbon-home/repository/conf/tomcat/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/carbon-home/repository/conf/tomcat" relative="/WEB-INF" />
+        </webroots>
+      </configuration>
+    </facet>
+    <facet type="web" name="Web2">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/carbon-home/repository/conf/tomcat/carbon/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/carbon-home/repository/conf/tomcat/carbon" relative="/" />
+        </webroots>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs.wso2:geronimo-stax-api_1.0_spec:1.0.1.wso2v2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-stax-api_1.0_spec:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.woodstox:stax2-api:3.1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.woodstox:woodstox-core-asl:4.4.1" level="project" />
+    <orderEntry type="module" module-name="org.wso2.carbon.bootstrap" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.logging:pax-logging-api:1.11.0" level="project" />
+    <orderEntry type="library" name="Maven: org.osgi:osgi.core:6.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.osgi:osgi.cmpn:6.0.0" level="project" />
+    <orderEntry type="library" name="Maven: wrapper:wrapper:3.2.3" level="project" />
+    <orderEntry type="module" module-name="org.wso2.carbon.bridge" />
+    <orderEntry type="library" name="Maven: org.eclipse.equinox:javax.servlet:3.0.0.v201112011016" level="project" />
+    <orderEntry type="module" module-name="org.wso2.carbon.http.bridge" />
+    <orderEntry type="library" name="Maven: org.eclipse.platform:org.eclipse.osgi:3.14.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.equinox:org.eclipse.equinox.http.servlet:1.1.400.v20130418-1354" level="project" />
+    <orderEntry type="module" module-name="org.wso2.carbon.servletbridge" />
+    <orderEntry type="module" module-name="org.wso2.carbon.server" />
+    <orderEntry type="library" name="Maven: org.wso2.config.mapper:config-mapper:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.hubspot.jinjava:jinjava:2.4.14" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:27.0.1-jre" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:failureaccess:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
+    <orderEntry type="library" name="Maven: org.checkerframework:checker-qual:2.5.2" level="project" />
+    <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.17" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.22.0-GA" level="project" />
+    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.10.3" level="project" />
+    <orderEntry type="library" name="Maven: com.google.re2j:re2j:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:annotations:3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.9.2" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.8" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.8" level="project" />
+    <orderEntry type="library" name="Maven: net.consensys.cava:cava-toml:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.7.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.5" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.12" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.12.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.12.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-jcl:2.12.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.axis2:axis2-kernel:1.6.1-wso2v38" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ws.commons.axiom:axiom-api:1.2.11-wso2v16" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-activation_1.1_spec:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-javamail_1.4_spec:1.7.1" level="project" />
+    <orderEntry type="library" name="Maven: jaxen:jaxen:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ws.commons.axiom:axiom-impl:1.2.11-wso2v16" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.woodstox:wstx-asl:3.2.9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-text:1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-ws-metadata_2.0_spec:1.1.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.3" level="project" />
+    <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.wso2.orbit.commons-fileupload:commons-fileupload:1.3.3.wso2v1" level="project" />
+    <orderEntry type="library" name="Maven: wsdl4j:wsdl4j:1.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ws.commons.schema.wso2:XmlSchema:1.4.7.wso2v6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.neethi:neethi:2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.woden:woden-api:1.0M9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ws.commons.schema:XmlSchema:1.4.7" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.woden:woden-impl-dom:1.0M9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.woden:woden-impl-commons:1.0M9" level="project" />
+    <orderEntry type="library" name="Maven: javax.ws.rs:jsr311-api:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.wso2.securevault:org.wso2.securevault:1.1.3" level="project" />
+    <orderEntry type="library" name="Maven: jline:jline:0.9.94" level="project" />
+    <orderEntry type="library" name="Maven: junit:junit:4.11" level="project" />
+    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:1.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang.wso2:commons-lang:2.6.0.wso2v1" level="project" />
+    <orderEntry type="library" name="Maven: ant-contrib:ant-contrib:1.0b3" level="project" />
+    <orderEntry type="library" name="Maven: ant:ant:1.5" level="project" />
+    <orderEntry type="library" name="Maven: ws-commons:tcpmon:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.wso2.orbit.com.h2database:h2:1.4.199.wso2v1" level="project" />
+    <orderEntry type="library" name="Maven: org.wso2.orbit.org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1.wso2v1" level="project" />
+    <orderEntry type="library" name="Maven: xerces.wso2:xercesImpl:2.8.1.wso2v2" level="project" />
+    <orderEntry type="library" name="Maven: org.wso2.orbit.xalan:xalan:2.7.2.wso2v2" level="project" />
+    <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.4.01" level="project" />
+    <orderEntry type="library" name="Maven: xml-resolver:xml-resolver:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-jaxws_2.2_spec:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-annotations-api:9.0.22" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-juli:9.0.22" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.4.0-b180830.0359" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:javax.activation-api:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.4.0-b180830.0438" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.istack:istack-commons-runtime:3.0.8" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.activation:jakarta.activation-api:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:activation:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.3.2" level="project" />
+  </component>
+</module>

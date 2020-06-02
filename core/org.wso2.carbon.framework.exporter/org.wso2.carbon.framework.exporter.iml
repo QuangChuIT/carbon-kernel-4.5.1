@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Osmorc" name="OSGi">
+      <configuration manifestGenerationMode="OsmorcControlled" manifestLocation="" jarfileLocation="org.wso2.carbon.framework.exporter-4.5.1.jar" outputPathType="CompilerOutputPath" bndFileLocation="" bundlorFileLocation="" bundleActivator="" bundleSymbolicName="org.wso2.carbon.framework.exporter" bundleVersion="4.5.1" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false" doNotSynchronizeWithMaven="false">
+        <additionalProperties>
+          <property key="Bundle-Description" value="exporting java packages to OSGi env, with versions" />
+          <property key="Bundle-Vendor" value="WSO2 Inc" />
+          <property key="Bundle-DocURL" value="http://wso2.com" />
+          <property key="Fragment-Host" value="system.bundle; extension:=framework" />
+          <property key="Export-Package" value="javax.xml.stream; version=&quot;1.0.1&quot;,javax.xml.stream.events; version=&quot;1.0.1&quot;,javax.xml.stream.util; version=&quot;1.0.1&quot;" />
+          <property key="Import-Package" value="!*" />
+          <property key="Bundle-Name" value="WSO2 Carbon - Servlet Bridge" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

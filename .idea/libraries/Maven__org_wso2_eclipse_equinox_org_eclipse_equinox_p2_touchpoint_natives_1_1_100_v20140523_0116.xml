@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.wso2.eclipse.equinox:org.eclipse.equinox.p2.touchpoint.natives:1.1.100.v20140523-0116">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/wso2/eclipse/equinox/org.eclipse.equinox.p2.touchpoint.natives/1.1.100.v20140523-0116/org.eclipse.equinox.p2.touchpoint.natives-1.1.100.v20140523-0116.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/wso2/eclipse/equinox/org.eclipse.equinox.p2.touchpoint.natives/1.1.100.v20140523-0116/org.eclipse.equinox.p2.touchpoint.natives-1.1.100.v20140523-0116-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/wso2/eclipse/equinox/org.eclipse.equinox.p2.touchpoint.natives/1.1.100.v20140523-0116/org.eclipse.equinox.p2.touchpoint.natives-1.1.100.v20140523-0116-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

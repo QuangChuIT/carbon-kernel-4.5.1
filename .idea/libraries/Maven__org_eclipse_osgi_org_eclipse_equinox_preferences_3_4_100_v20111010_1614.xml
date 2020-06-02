@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.eclipse.osgi:org.eclipse.equinox.preferences:3.4.100.v20111010-1614">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.equinox.preferences/3.4.100.v20111010-1614/org.eclipse.equinox.preferences-3.4.100.v20111010-1614.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.equinox.preferences/3.4.100.v20111010-1614/org.eclipse.equinox.preferences-3.4.100.v20111010-1614-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.equinox.preferences/3.4.100.v20111010-1614/org.eclipse.equinox.preferences-3.4.100.v20111010-1614-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

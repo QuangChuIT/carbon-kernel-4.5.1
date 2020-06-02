@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.eclipse.osgi:org.eclipse.equinox.p2.transport.ecf:1.0.100.v20110902-0807">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.equinox.p2.transport.ecf/1.0.100.v20110902-0807/org.eclipse.equinox.p2.transport.ecf-1.0.100.v20110902-0807.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.equinox.p2.transport.ecf/1.0.100.v20110902-0807/org.eclipse.equinox.p2.transport.ecf-1.0.100.v20110902-0807-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.equinox.p2.transport.ecf/1.0.100.v20110902-0807/org.eclipse.equinox.p2.transport.ecf-1.0.100.v20110902-0807-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

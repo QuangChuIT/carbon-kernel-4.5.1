@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.eclipse.osgi:org.eclipse.ecf.filetransfer:5.0.0.v20110531-2218">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.ecf.filetransfer/5.0.0.v20110531-2218/org.eclipse.ecf.filetransfer-5.0.0.v20110531-2218.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.ecf.filetransfer/5.0.0.v20110531-2218/org.eclipse.ecf.filetransfer-5.0.0.v20110531-2218-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.ecf.filetransfer/5.0.0.v20110531-2218/org.eclipse.ecf.filetransfer-5.0.0.v20110531-2218-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

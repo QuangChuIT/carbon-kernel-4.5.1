@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/feature-manager/org.wso2.carbon.feature.mgt.core" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/feature-manager/org.wso2.carbon.feature.mgt.services" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/feature-manager/org.wso2.carbon.feature.mgt.ui" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/javax.cache" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.addressing" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.application.deployer" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.authenticator.proxy" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.base" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.cluster.mgt.core" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.coordination.common" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.coordination.core" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.core" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.core.bootup.validator" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.core.common" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.core.services" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.framework.exporter" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.http.bridge" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.i18n" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.ndatasource.common" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.ndatasource.core" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.ndatasource.rdbms" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.osgi.security" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.pax-logging-log4j2-plugins" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.queuing" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.registry.api" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.registry.core" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.registry.server" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.securevault" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.server.admin" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.server.admin.common" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.server.admin.ui" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.servletbridge" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.tomcat" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.tomcat.ext" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.ui" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.ui.menu/org.wso2.carbon.ui.menu.general" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.ui.menu/org.wso2.carbon.ui.menu.governance" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.ui.menu/org.wso2.carbon.ui.menu.registry" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.ui.menu/org.wso2.carbon.ui.menu.tools" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.user.api" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.user.core" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/org.wso2.carbon.utils" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/server-role-manager/org.wso2.carbon.roles.mgt" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/core/server-role-manager/org.wso2.carbon.roles.mgt.ui" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/distribution/integration/sample-servlet" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/distribution/product/modules/styles" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/samples/student-manager/components/org.wso2.carbon.student.mgt" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/samples/student-manager/components/org.wso2.carbon.student.mgt.ui" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/service-stubs/org.wso2.carbon.authenticator.stub" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/service-stubs/org.wso2.carbon.core.commons.stub" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/service-stubs/org.wso2.carbon.feature.mgt.stub" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/service-stubs/org.wso2.carbon.roles.mgt.stub" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/service-stubs/org.wso2.carbon.server.admin.stub" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/classes" />
+  </component>
+</project>
