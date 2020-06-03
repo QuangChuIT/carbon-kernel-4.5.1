@@ -22,8 +22,9 @@
 <%@ page import="java.net.URL" %>
 <%@ page import="org.wso2.carbon.utils.multitenancy.MultitenantConstants" %>
 <%@ page import="org.wso2.carbon.utils.CarbonUtils" %>
+	<%@ page import="java.util.Locale" %>
 
-<%
+		<%
     String userGuideURL = (String) config.getServletContext().getAttribute(CarbonConstants.PRODUCT_XML_WSO2CARBON +
                                                                            CarbonConstants.PRODUCT_XML_USERGUIDE);
     if(userGuideURL == null){
@@ -36,6 +37,8 @@
         session.setAttribute(CarbonConstants.SERVER_URL, serverURL);
     }
 
+    Locale locale = pageContext.getResponse().getLocale();
+    String language = locale.getLanguage();
 %>
 <!--[IF IE 7]>
 	<style>
@@ -45,7 +48,24 @@
 	</style>
 <![endif]-->
 <fmt:bundle basename="org.wso2.carbon.i18n.Resources">
+	<script type="text/javascript">
+		function changeLanguage() {
+			var key = "locale";
+			var value = document.getElementById("language").value;
+			var s = window.location.href;
+			if(s.indexOf("?")===-1) {
+				s += "?locale=" + value;
+			}
+			else {
+				var kvp = key+"="+value;
+				var r = new RegExp("(&|\\?)"+key+"=[^\&]*");
+				s = s.replace(r,"$1"+kvp);
+				if(!RegExp.$1) {s += (s.length>0 ? '&' : '?') + kvp;};
+			}
 
+			window.location.replace(s);
+		}
+	</script>
     <div id="header-div">
         <div class="right-logo"><fmt:message key="management.console"/></div>
         <div class="left-logo">
@@ -60,6 +80,20 @@
         <div class="header-links">
 		<div class="right-links">            
 			<ul>
+				<li class="right">
+					<label><fmt:message key="lang.language"/></label>
+					<select name="language" id="language" onchange="changeLanguage()">
+						<%
+							if(language == "vi") {
+						%>
+						<option value="en"><fmt:message key="lang.english"/></option>
+						<option value="vi" selected><fmt:message key="lang.vietnamese"/></option>
+						<%  } else { %>
+						<option value="en" selected><fmt:message key="lang.english"/></option>
+						<option value="vi"><fmt:message key="lang.vietnamese"/></option>
+						<%  } %>
+					</select>
+				</li>
 		                <%
 		                    Boolean authenticated = (Boolean) request.getSession().getAttribute("authenticated");
 		                    if (authenticated != null && authenticated.booleanValue()) {
