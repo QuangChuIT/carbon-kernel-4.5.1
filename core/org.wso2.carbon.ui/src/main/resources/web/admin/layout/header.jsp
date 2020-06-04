@@ -49,9 +49,8 @@
 <![endif]-->
 <fmt:bundle basename="org.wso2.carbon.i18n.Resources">
 	<script type="text/javascript">
-		function changeLanguage() {
+		function changeLanguage(value) {
 			var key = "locale";
-			var value = document.getElementById("language").value;
 			var s = window.location.href;
 			if(s.indexOf("?")===-1) {
 				s += "?locale=" + value;
@@ -64,6 +63,7 @@
 			}
 
 			window.location.replace(s);
+			return false;
 		}
 	</script>
     <div id="header-div">
@@ -74,25 +74,33 @@
 				<h1 class="main-title">Identity Server</h1>
 			</a>
         </div>
-        <div class="middle-ad">
+        <div class="middle-ad">i
             <%@include file="announcements.jsp"%>
         </div>
         <div class="header-links">
 		<div class="right-links">            
 			<ul>
-				<li class="right">
-					<label><fmt:message key="lang.language"/></label>
-					<select name="language" id="language" onchange="changeLanguage()">
+				<li class="middle">
+					<label><fmt:message key="lang.language"/>:</label>
+				</li>
+				<li class="middle">
 						<%
 							if(language == "vi") {
 						%>
-						<option value="en"><fmt:message key="lang.english"/></option>
-						<option value="vi" selected><fmt:message key="lang.vietnamese"/></option>
+						<a href="#" hreflang="en" title="<fmt:message key="lang.english"/>" onclick="return changeLanguage('en')">
+							<img src="../admin/images/en.png" height="15">
+						</a>
+						<a href="#" hreflang="vi" title="<fmt:message key="lang.vietnamese"/>" onclick="return changeLanguage('vi')">
+							<img src="../admin/images/vi.png" style="padding:0px 2px;border:1px solid white" height="15">
+						</a>
 						<%  } else { %>
-						<option value="en" selected><fmt:message key="lang.english"/></option>
-						<option value="vi"><fmt:message key="lang.vietnamese"/></option>
+						<a href="#" hreflang="en" title="<fmt:message key="lang.english"/>" onclick="return changeLanguage('en')">
+							<img src="../admin/images/en.png" style="padding:0px 2px;border:1px solid white" height="15">
+						</a>
+						<a href="#" hreflang="vi" title="<fmt:message key="lang.vietnamese"/>" onclick="return changeLanguage('vi')">
+							<img src="../admin/images/vi.png" height="15">
+						</a>
 						<%  } %>
-					</select>
 				</li>
 		                <%
 		                    Boolean authenticated = (Boolean) request.getSession().getAttribute("authenticated");
