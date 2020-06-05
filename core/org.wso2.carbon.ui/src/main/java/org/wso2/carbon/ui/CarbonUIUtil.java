@@ -52,6 +52,7 @@ import org.wso2.carbon.base.ServerConfiguration;
 public class CarbonUIUtil {
     public static final String QUERY_PARAM_LOCALE = "locale";
     public static final String SESSION_PARAM_LOCALE = "custom_locale";
+    public static final String DEFAULT_LOCALE = "vi";
     private static Log log = LogFactory.getLog(CarbonUIUtil.class);
     private static BundleContext bundleContext = null;
 
@@ -306,6 +307,10 @@ public class CarbonUIUtil {
     {
         if (request.getParameter(QUERY_PARAM_LOCALE) != null) {
             request.getSession().setAttribute(CarbonUIUtil.SESSION_PARAM_LOCALE, request.getParameter(QUERY_PARAM_LOCALE));
+        }
+        else if(request.getSession().getAttribute(SESSION_PARAM_LOCALE) == null) {
+            // set default locale
+            request.getSession().setAttribute(CarbonUIUtil.SESSION_PARAM_LOCALE, CarbonUIUtil.DEFAULT_LOCALE);
         }
     }
 

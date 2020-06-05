@@ -22,8 +22,9 @@
 <%@ page import="java.net.URL" %>
 <%@ page import="org.wso2.carbon.utils.multitenancy.MultitenantConstants" %>
 <%@ page import="org.wso2.carbon.utils.CarbonUtils" %>
+	<%@ page import="java.util.Locale" %>
 
-<%
+		<%
     String userGuideURL = (String) config.getServletContext().getAttribute(CarbonConstants.PRODUCT_XML_WSO2CARBON +
                                                                            CarbonConstants.PRODUCT_XML_USERGUIDE);
     if(userGuideURL == null){
@@ -36,6 +37,8 @@
         session.setAttribute(CarbonConstants.SERVER_URL, serverURL);
     }
 
+    Locale locale = pageContext.getResponse().getLocale();
+    String language = locale.getLanguage();
 %>
 <!--[IF IE 7]>
 	<style>
@@ -45,7 +48,24 @@
 	</style>
 <![endif]-->
 <fmt:bundle basename="org.wso2.carbon.i18n.Resources">
+	<script type="text/javascript">
+		function changeLanguage(value) {
+			var key = "locale";
+			var s = window.location.href;
+			if(s.indexOf("?")===-1) {
+				s += "?locale=" + value;
+			}
+			else {
+				var kvp = key+"="+value;
+				var r = new RegExp("(&|\\?)"+key+"=[^\&]*");
+				s = s.replace(r,"$1"+kvp);
+				if(!RegExp.$1) {s += (s.length>0 ? '&' : '?') + kvp;};
+			}
 
+			window.location.replace(s);
+			return false;
+		}
+	</script>
     <div id="header-div">
         <div class="right-logo"><fmt:message key="management.console"/></div>
         <div class="left-logo">
@@ -54,12 +74,34 @@
 				<h1 class="main-title">Identity Server</h1>
 			</a>
         </div>
-        <div class="middle-ad">
+        <div class="middle-ad">i
             <%@include file="announcements.jsp"%>
         </div>
         <div class="header-links">
 		<div class="right-links">            
 			<ul>
+				<li class="middle">
+					<label><fmt:message key="lang.language"/>:</label>
+				</li>
+				<li class="middle">
+						<%
+							if(language == "vi") {
+						%>
+						<a href="#" hreflang="en" title="<fmt:message key="lang.english"/>" onclick="return changeLanguage('en')">
+							<img src="../admin/images/en.png" height="15">
+						</a>
+						<a href="#" hreflang="vi" title="<fmt:message key="lang.vietnamese"/>" onclick="return changeLanguage('vi')">
+							<img src="../admin/images/vi.png" style="padding:0px 2px;border:1px solid white" height="15">
+						</a>
+						<%  } else { %>
+						<a href="#" hreflang="en" title="<fmt:message key="lang.english"/>" onclick="return changeLanguage('en')">
+							<img src="../admin/images/en.png" style="padding:0px 2px;border:1px solid white" height="15">
+						</a>
+						<a href="#" hreflang="vi" title="<fmt:message key="lang.vietnamese"/>" onclick="return changeLanguage('vi')">
+							<img src="../admin/images/vi.png" height="15">
+						</a>
+						<%  } %>
+				</li>
 		                <%
 		                    Boolean authenticated = (Boolean) request.getSession().getAttribute("authenticated");
 		                    if (authenticated != null && authenticated.booleanValue()) {
