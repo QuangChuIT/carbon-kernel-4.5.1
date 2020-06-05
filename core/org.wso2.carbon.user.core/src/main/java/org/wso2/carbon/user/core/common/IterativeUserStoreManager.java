@@ -21,6 +21,7 @@ package org.wso2.carbon.user.core.common;
 import org.wso2.carbon.user.api.Properties;
 import org.wso2.carbon.user.api.RealmConfiguration;
 import org.wso2.carbon.user.core.UserStoreException;
+import org.wso2.carbon.user.core.model.UserProfile;
 import org.wso2.carbon.user.core.tenant.Tenant;
 
 import java.util.Map;
@@ -200,6 +201,12 @@ public class IterativeUserStoreManager extends AbstractUserStoreManager {
     protected String[] doListUsers(String filter, int maxItemLimit) throws UserStoreException {
 
         return this.abstractUserStoreManager.doListUsers(filter, maxItemLimit);
+    }
+
+    @Override
+    protected UserProfile[] doExportUsers(String filter, int maxItemLimit, String paramAtts) throws UserStoreException {
+
+        return this.abstractUserStoreManager.doExportUsers(filter, maxItemLimit, paramAtts);
     }
 
     @Override

@@ -11,7 +11,7 @@
           <property key="Export-Package" value="*" />
           <property key="Bundle-ClassPath" value="." />
           <property key="Carbon-Component" value="UIBundle" />
-          <property key="Include-Resource" value="web/tools/images/tools.gif=$MODULE_DIR$/src/main/resources/web/tools/images/tools.gif,META-INF/component.xml=$MODULE_DIR$/src/main/resources/META-INF/component.xml" />
+          <property key="Include-Resource" value="META-INF/component.xml=$MODULE_DIR$/src/main/resources/META-INF/component.xml,web/tools/images/tools.gif=$MODULE_DIR$/src/main/resources/web/tools/images/tools.gif" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>

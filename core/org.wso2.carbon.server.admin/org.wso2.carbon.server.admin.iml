@@ -14,7 +14,7 @@
           <property key="Export-Package" value="!org.wso2.carbon.server.admin.internal,org.wso2.carbon.server.admin.*" />
           <property key="Import-Package" value="org.wso2.carbon.server.admin.common,org.osgi.framework.*,org.apache.axis2.*; version=&quot;[1.6.1, 1.7.0)&quot;,org.apache.axiom.*; version=&quot;[1.2.11, 1.3.0)&quot;,org.apache.commons.logging.*; version=&quot;[1.2.0,2.0.0)&quot;,org.wso2.carbon.utils.*,org.apache.neethi.*; version=&quot;[2.0.4.wso2v4, 3.1.0)&quot;,org.wso2.carbon.core.*,*;resolution:=optional" />
           <property key="DynamicImport-Package" value="*" />
-          <property key="Include-Resource" value="privilegedaction.xml=$MODULE_DIR$/src/main/resources/privilegedaction.xml,META-INF/component.xml=$MODULE_DIR$/src/main/resources/META-INF/component.xml,META-INF/module.xml=$MODULE_DIR$/src/main/resources/META-INF/module.xml,META-INF/services.xml=$MODULE_DIR$/src/main/resources/META-INF/services.xml" />
+          <property key="Include-Resource" value="META-INF/module.xml=$MODULE_DIR$/src/main/resources/META-INF/module.xml,META-INF/component.xml=$MODULE_DIR$/src/main/resources/META-INF/component.xml,META-INF/services.xml=$MODULE_DIR$/src/main/resources/META-INF/services.xml,privilegedaction.xml=$MODULE_DIR$/src/main/resources/privilegedaction.xml" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>

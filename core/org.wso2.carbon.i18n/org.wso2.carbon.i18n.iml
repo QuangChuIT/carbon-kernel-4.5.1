@@ -11,7 +11,7 @@
           <property key="Export-Package" value="org.wso2.carbon.i18n.*" />
           <property key="Bundle-ClassPath" value="." />
           <property key="Carbon-Component" value="UIBundle" />
-          <property key="Include-Resource" value="org/wso2/carbon/i18n/JSResources.properties=$MODULE_DIR$/src/main/resources/org/wso2/carbon/i18n/JSResources.properties,org/wso2/carbon/i18n/Resources.properties=$MODULE_DIR$/src/main/resources/org/wso2/carbon/i18n/Resources.properties" />
+          <property key="Include-Resource" value="org/wso2/carbon/i18n/Resources.properties=$MODULE_DIR$/src/main/resources/org/wso2/carbon/i18n/Resources.properties,org/wso2/carbon/i18n/JSResources.properties=$MODULE_DIR$/src/main/resources/org/wso2/carbon/i18n/JSResources.properties" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>

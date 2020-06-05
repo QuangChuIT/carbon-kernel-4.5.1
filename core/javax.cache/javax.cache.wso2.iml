@@ -11,7 +11,7 @@
           <property key="Private-Package" value="org.wso2.carbon.caching.impl.internal.*,org.wso2.carbon.caching.impl.eviction.*" />
           <property key="Import-Package" value="javax.transaction.*,*;resolution:=optional" />
           <property key="Bundle-Name" value="WSO2 Carbon - JSR 107 API" />
-          <property key="Include-Resource" value="javax/cache/packageinfo=$MODULE_DIR$/src/main/java/javax/cache/packageinfo,javax/cache/event/packageinfo=$MODULE_DIR$/src/main/java/javax/cache/event/packageinfo,javax/cache/mbeans/packageinfo=$MODULE_DIR$/src/main/java/javax/cache/mbeans/packageinfo,javax/cache/spi/packageinfo=$MODULE_DIR$/src/main/java/javax/cache/spi/packageinfo,javax/cache/transaction/packageinfo=$MODULE_DIR$/src/main/java/javax/cache/transaction/packageinfo" />
+          <property key="Include-Resource" value="javax/cache/mbeans/packageinfo=$MODULE_DIR$/src/main/java/javax/cache/mbeans/packageinfo,javax/cache/spi/packageinfo=$MODULE_DIR$/src/main/java/javax/cache/spi/packageinfo,javax/cache/packageinfo=$MODULE_DIR$/src/main/java/javax/cache/packageinfo,javax/cache/event/packageinfo=$MODULE_DIR$/src/main/java/javax/cache/event/packageinfo,javax/cache/transaction/packageinfo=$MODULE_DIR$/src/main/java/javax/cache/transaction/packageinfo" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>

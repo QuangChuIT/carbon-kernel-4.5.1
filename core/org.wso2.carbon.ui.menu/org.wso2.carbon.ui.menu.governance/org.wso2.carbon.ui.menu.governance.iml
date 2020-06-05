@@ -11,7 +11,7 @@
           <property key="Export-Package" value="!*" />
           <property key="Bundle-ClassPath" value="." />
           <property key="Carbon-Component" value="UIBundle" />
-          <property key="Include-Resource" value="web/images/schema.gif=$MODULE_DIR$/src/main/resources/web/images/schema.gif,web/images/wsdl.gif=$MODULE_DIR$/src/main/resources/web/images/wsdl.gif,web/images/policies.gif=$MODULE_DIR$/src/main/resources/web/images/policies.gif,web/images/services.gif=$MODULE_DIR$/src/main/resources/web/images/services.gif,web/images/add.gif=$MODULE_DIR$/src/main/resources/web/images/add.gif,web/images/list.gif=$MODULE_DIR$/src/main/resources/web/images/list.gif,META-INF/component.xml=$MODULE_DIR$/src/main/resources/META-INF/component.xml" />
+          <property key="Include-Resource" value="META-INF/component.xml=$MODULE_DIR$/src/main/resources/META-INF/component.xml,web/images/policies.gif=$MODULE_DIR$/src/main/resources/web/images/policies.gif,web/images/wsdl.gif=$MODULE_DIR$/src/main/resources/web/images/wsdl.gif,web/images/schema.gif=$MODULE_DIR$/src/main/resources/web/images/schema.gif,web/images/services.gif=$MODULE_DIR$/src/main/resources/web/images/services.gif,web/images/list.gif=$MODULE_DIR$/src/main/resources/web/images/list.gif,web/images/add.gif=$MODULE_DIR$/src/main/resources/web/images/add.gif" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>

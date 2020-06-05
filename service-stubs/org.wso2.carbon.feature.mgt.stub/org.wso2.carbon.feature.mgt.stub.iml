@@ -10,7 +10,7 @@
           <property key="Export-Package" value="org.wso2.carbon.feature.mgt.stub.*;version=&quot;4.5.1&quot;" />
           <property key="Import-Package" value="!org.wso2.carbon.feature.mgt.stub.*,*;resolution:=optional" />
           <property key="Bundle-Name" value="WSO2 Carbon - Component Manager Stub" />
-          <property key="Include-Resource" value="RepositoryAdminService.wsdl=$MODULE_DIR$/src/main/resources/RepositoryAdminService.wsdl,ProvisioningAdminService.wsdl=$MODULE_DIR$/src/main/resources/ProvisioningAdminService.wsdl" />
+          <property key="Include-Resource" value="ProvisioningAdminService.wsdl=$MODULE_DIR$/src/main/resources/ProvisioningAdminService.wsdl,RepositoryAdminService.wsdl=$MODULE_DIR$/src/main/resources/RepositoryAdminService.wsdl" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>

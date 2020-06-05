@@ -11,7 +11,7 @@
           <property key="Axis2Module" value="org.wso2.carbon.feature.mgt.services-4.5.1" />
           <property key="Private-Package" value="org.wso2.carbon.feature.mgt.services.*,org.wso2.carbon.feature.mgt.module.*" />
           <property key="Import-Package" value="org.wso2.carbon.feature.mgt.core.*,*;resolution:=optional" />
-          <property key="Include-Resource" value="RepositoryAdminService.wsdl=$MODULE_DIR$/src/main/resources/RepositoryAdminService.wsdl,META-INF/component.xml=$MODULE_DIR$/src/main/resources/META-INF/component.xml,META-INF/module.xml=$MODULE_DIR$/src/main/resources/META-INF/module.xml,META-INF/services.xml=$MODULE_DIR$/src/main/resources/META-INF/services.xml" />
+          <property key="Include-Resource" value="META-INF/module.xml=$MODULE_DIR$/src/main/resources/META-INF/module.xml,META-INF/component.xml=$MODULE_DIR$/src/main/resources/META-INF/component.xml,META-INF/services.xml=$MODULE_DIR$/src/main/resources/META-INF/services.xml,RepositoryAdminService.wsdl=$MODULE_DIR$/src/main/resources/RepositoryAdminService.wsdl" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>

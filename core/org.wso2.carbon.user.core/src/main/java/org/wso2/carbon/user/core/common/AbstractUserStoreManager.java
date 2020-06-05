@@ -24,7 +24,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.CarbonConstants;
-import org.wso2.carbon.base.ServerConfiguration;
 import org.wso2.carbon.context.CarbonContext;
 import org.wso2.carbon.user.api.RealmConfiguration;
 import org.wso2.carbon.user.core.PaginatedUserStoreManager;
@@ -52,18 +51,9 @@ import org.wso2.carbon.user.core.listener.UserManagementErrorEventListener;
 import org.wso2.carbon.user.core.listener.UserOperationEventListener;
 import org.wso2.carbon.user.core.listener.UserStoreManagerConfigurationListener;
 import org.wso2.carbon.user.core.listener.UserStoreManagerListener;
-import org.wso2.carbon.user.core.model.Condition;
-import org.wso2.carbon.user.core.model.ExpressionCondition;
-import org.wso2.carbon.user.core.model.ExpressionOperation;
-import org.wso2.carbon.user.core.model.OperationalCondition;
-import org.wso2.carbon.user.core.model.OperationalOperation;
-import org.wso2.carbon.user.core.model.UserClaimSearchEntry;
-import org.wso2.carbon.user.core.model.UserMgtContext;
+import org.wso2.carbon.user.core.model.*;
 import org.wso2.carbon.user.core.profile.ProfileConfigurationManager;
 import org.wso2.carbon.user.core.service.RealmService;
-import org.wso2.carbon.user.core.soap.IXacThuc;
-import org.wso2.carbon.user.core.soap.SoapClient;
-import org.wso2.carbon.user.core.soap.XacThucLocator;
 import org.wso2.carbon.user.core.system.SystemUserRoleManager;
 import org.wso2.carbon.user.core.util.UserCoreUtil;
 import org.wso2.carbon.utils.Secret;
@@ -76,20 +66,11 @@ import java.nio.CharBuffer;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.naming.directory.Attributes;
 import javax.sql.DataSource;
-import javax.xml.soap.*;
 
 import static org.wso2.carbon.user.core.constants.UserCoreErrorConstants.ErrorMessages.ERROR_CODE_DUPLICATE_WHILE_ADDING_A_HYBRID_ROLE;
 import static org.wso2.carbon.user.core.constants.UserCoreErrorConstants.ErrorMessages.ERROR_CODE_DUPLICATE_WHILE_ADDING_A_SYSTEM_ROLE;
@@ -493,6 +474,15 @@ public abstract class AbstractUserStoreManager implements UserStoreManager, Pagi
      * @throws UserStoreException
      */
     protected abstract String[] doListUsers(String filter, int maxItemLimit)
+            throws UserStoreException;
+
+    /**
+     * @param filter
+     * @param maxItemLimit
+     * @return
+     * @throws UserStoreException
+     */
+    protected abstract UserProfile[] doExportUsers(String filter, int maxItemLimit, String paramAtts)
             throws UserStoreException;
 
     /*This is to get the display names of users in hybrid role according to the underlying user store, to be shown in UI*/
@@ -4218,6 +4208,97 @@ public abstract class AbstractUserStoreManager implements UserStoreManager, Pagi
 
         handlePostGetUserList(null, null, new ArrayList<>(Arrays.asList(userList)), true);
         return userList;
+    }
+
+    public final UserProfile[] exportUsers(String filter, int maxItemLimit, String paramAtts) throws UserStoreException {
+
+        if (!isSecureCall.get()) {
+            Class argTypes[] = new Class[]{String.class, int.class, String.class};
+            Object object = callSecure("exportUsers", new Object[]{filter, maxItemLimit, paramAtts}, argTypes);
+            return (UserProfile[]) object;
+        }
+
+        int index;
+        index = filter.indexOf(CarbonConstants.DOMAIN_SEPARATOR);
+        UserProfile[] userProfiles;
+
+        // Check whether we have a secondary UserStoreManager setup.
+        if (index > 0) {
+            // Using the short-circuit. User name comes with the domain name.
+            String domain = filter.substring(0, index);
+
+            UserStoreManager secManager = getSecondaryUserStoreManager(domain);
+            if (secManager != null) {
+                // We have a secondary UserStoreManager registered for this domain.
+                filter = filter.substring(index + 1);
+                if (secManager instanceof AbstractUserStoreManager) {
+                    userProfiles = ((AbstractUserStoreManager) secManager).doExportUsers(filter, maxItemLimit, paramAtts);
+                    return userProfiles;
+                } else {
+                    userProfiles = secManager.exportUsers(filter, maxItemLimit, paramAtts);
+                    return userProfiles;
+                }
+            }
+        } else if (index == 0) {
+            userProfiles = doExportUsers(filter.substring(1), maxItemLimit, paramAtts);
+            return userProfiles;
+        }
+
+        try {
+            userProfiles = doExportUsers(filter, maxItemLimit, paramAtts);
+        } catch (UserStoreException ex) {
+            handleGetUserListFailure(ErrorMessages.ERROR_CODE_ERROR_WHILE_GETTING_USER_LIST.getCode(),
+                    String.format(ErrorMessages.ERROR_CODE_ERROR_WHILE_GETTING_USER_LIST.getMessage(), ex.getMessage()),
+                    null, null, null);
+            throw ex;
+        }
+
+        String primaryDomain = realmConfig
+                .getUserStoreProperty(UserCoreConstants.RealmConfig.PROPERTY_DOMAIN_NAME);
+
+        if (this.getSecondaryUserStoreManager() != null) {
+            for (Map.Entry<String, UserStoreManager> entry : userStoreManagerHolder.entrySet()) {
+                if (entry.getKey().equalsIgnoreCase(primaryDomain)) {
+                    continue;
+                }
+                UserStoreManager storeManager = entry.getValue();
+                if (storeManager instanceof AbstractUserStoreManager) {
+                    try {
+                        UserProfile[] secondUserList = ((AbstractUserStoreManager) storeManager)
+                                .doExportUsers(filter, maxItemLimit, paramAtts);
+                        userProfiles = this.appendListUsers(userProfiles, secondUserList);
+                    } catch (UserStoreException ex) {
+                        // We can ignore and proceed. Ignore the results from this user store.
+                        log.error(ex);
+                    }
+                } else {
+                    UserProfile[] secondUserList = storeManager.exportUsers(filter, maxItemLimit, paramAtts);
+                    userProfiles = this.appendListUsers(userProfiles, secondUserList);
+                }
+            }
+        }
+
+        return userProfiles;
+    }
+
+    private UserProfile[] appendListUsers(UserProfile[] arr1, UserProfile[] arr2) throws UserStoreException {
+        if (arr1 == null || arr1.length == 0) {
+            return arr2;
+        }
+        if (arr2 == null || arr2.length == 0) {
+            return arr1;
+        }
+        UserProfile[] newArray = new UserProfile[arr1.length + arr2.length];
+        for (int i = 0; i < arr1.length; i++) {
+            newArray[i] = arr1[i];
+        }
+
+        int j = 0;
+        for (int i = arr1.length; i < newArray.length; i++) {
+            newArray[i] = arr2[j];
+            j++;
+        }
+        return newArray;
     }
 
     /**

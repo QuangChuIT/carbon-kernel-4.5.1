@@ -40,11 +40,7 @@ import org.wso2.carbon.user.core.common.PaginatedSearchResult;
 import org.wso2.carbon.user.core.common.RoleContext;
 import org.wso2.carbon.user.core.internal.UserStoreMgtDSComponent;
 import org.wso2.carbon.user.core.jdbc.JDBCUserStoreManager;
-import org.wso2.carbon.user.core.model.Condition;
-import org.wso2.carbon.user.core.model.ExpressionAttribute;
-import org.wso2.carbon.user.core.model.ExpressionCondition;
-import org.wso2.carbon.user.core.model.ExpressionOperation;
-import org.wso2.carbon.user.core.model.OperationalCondition;
+import org.wso2.carbon.user.core.model.*;
 import org.wso2.carbon.user.core.profile.ProfileConfigurationManager;
 import org.wso2.carbon.user.core.service.RealmService;
 import org.wso2.carbon.user.core.tenant.Tenant;
@@ -58,15 +54,7 @@ import org.wso2.carbon.utils.UnsupportedSecretTypeException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import javax.cache.Cache;
@@ -1055,6 +1043,116 @@ public class ReadOnlyLDAPUserStoreManager extends AbstractUserStoreManager {
             JNDIUtil.closeContext(dirContext);
         }
         return userNames;
+    }
+
+    /**
+     * Export user
+     * @return
+     */
+    public UserProfile[] doExportUsers(String filter, int maxItemLimit, String paramAtts) throws UserStoreException {
+        boolean debug = log.isDebugEnabled();
+        UserProfile[] userProfiles = new UserProfile[0];
+
+        if (maxItemLimit == 0) {
+            return userProfiles;
+        }
+
+        SearchControls searchCtls = new SearchControls();
+        searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+
+        if (filter.contains("?") || filter.contains("**")) {
+            throw new UserStoreException(
+                    "Invalid character sequence entered for user serch. Please enter valid sequence.");
+        }
+
+        StringBuffer searchFilter =
+                new StringBuffer(
+                        realmConfig.getUserStoreProperty(LDAPConstants.USER_NAME_LIST_FILTER));
+        String searchBases = realmConfig.getUserStoreProperty(LDAPConstants.USER_SEARCH_BASE);
+
+        String userNameProperty =
+                realmConfig.getUserStoreProperty(LDAPConstants.USER_NAME_ATTRIBUTE);
+
+        String serviceNameAttribute = "sn";
+
+        StringBuffer finalFilter = new StringBuffer();
+
+        List<String> attributes = new ArrayList<>();
+        attributes.add(userNameProperty);
+        attributes.add(serviceNameAttribute);
+        String[] returnCol = paramAtts.split(",");
+        for(int i = 0; i < returnCol.length; i++) {
+            if(!attributes.contains(returnCol[i])) {
+                attributes.add(returnCol[i]);
+            }
+        }
+        String[] returnedAtts = new String[attributes.size()];
+        attributes.toArray(returnedAtts );
+
+        finalFilter.append("(&").append(searchFilter).append("(").append(userNameProperty).append("=")
+                .append(escapeSpecialCharactersForFilterWithStarAsRegex(filter)).append("))");
+
+
+        if (debug) {
+            log.debug("Listing users. SearchBase: " + searchBases + " Constructed-Filter: " + finalFilter.toString());
+        }
+
+        searchCtls.setReturningAttributes(returnedAtts);
+        DirContext dirContext = null;
+        NamingEnumeration<SearchResult> answer = null;
+        List<UserProfile> list = new ArrayList<>();
+
+        try {
+            dirContext = connectionSource.getContext();
+            // handle multiple search bases
+            String[] searchBaseArray = searchBases.split("#");
+
+            for (String searchBase : searchBaseArray) {
+
+                answer = dirContext.search(escapeDNForSearch(searchBase), finalFilter.toString(), searchCtls);
+
+                while (answer.hasMoreElements()) {
+                    SearchResult result = (SearchResult) answer.next();
+                    Attributes attribs = result.getAttributes();
+
+                    if (null != attribs) {
+                        log.debug("Result found ..");
+                        if(attribs.get("sn") == null || (attribs.get("sn") != null && !("Service".equals(attribs.get("sn").get())))) {
+                            UserProfile profile = new UserProfile();
+                            String[] atts = paramAtts.split(",");
+                            for(String att : atts) {
+                                profile.getUserProperties().put(att, attribs.get(att) == null ? "" : (String)attribs.get(att).get());
+                            }
+                            list.add(profile);
+                        }
+                    }
+                }
+            }
+            userProfiles = list.toArray(new UserProfile[list.size()]);
+
+        } catch (PartialResultException e) {
+            // can be due to referrals in AD. so just ignore error
+            String errorMessage =
+                    "Error occurred while getting user list for filter : " + filter + "max limit : " + maxItemLimit;
+            if (isIgnorePartialResultException()) {
+                if (log.isDebugEnabled()) {
+                    log.debug(errorMessage, e);
+                }
+            } else {
+                throw new UserStoreException(errorMessage, e);
+            }
+        } catch (NamingException e) {
+            String errorMessage =
+                    "Error occurred while getting user list for filter : " + filter + "max limit : " + maxItemLimit;
+            if (log.isDebugEnabled()) {
+                log.debug(errorMessage, e);
+            }
+            throw new UserStoreException(errorMessage, e);
+        } finally {
+            JNDIUtil.closeNamingEnumeration(answer);
+            JNDIUtil.closeContext(dirContext);
+        }
+        return userProfiles;
     }
 
     @Override

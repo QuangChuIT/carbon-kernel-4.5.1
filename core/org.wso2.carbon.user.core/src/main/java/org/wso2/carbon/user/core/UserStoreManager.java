@@ -17,8 +17,11 @@ package org.wso2.carbon.user.core;
 
 import org.wso2.carbon.user.api.RealmConfiguration;
 import org.wso2.carbon.user.core.claim.Claim;
+import org.wso2.carbon.user.core.model.UserProfile;
 import org.wso2.carbon.user.core.tenant.Tenant;
 
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
 import java.util.Date;
 import java.util.Map;
 
@@ -55,6 +58,8 @@ public interface UserStoreManager extends org.wso2.carbon.user.api.UserStoreMana
      * @throws UserStoreException
      */
     String[] listUsers(String filter, int maxItemLimit) throws UserStoreException;
+
+    UserProfile[] exportUsers(String filter, int maxItemLimit, String paramAtts) throws UserStoreException;
 
     /**
      * Checks whether the user is in the user store

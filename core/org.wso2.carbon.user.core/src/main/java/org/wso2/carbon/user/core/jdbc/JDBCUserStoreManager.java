@@ -36,12 +36,7 @@ import org.wso2.carbon.user.core.common.RoleContext;
 import org.wso2.carbon.user.core.dto.RoleDTO;
 import org.wso2.carbon.user.core.hybrid.HybridJDBCConstants;
 import org.wso2.carbon.user.core.jdbc.caseinsensitive.JDBCCaseInsensitiveConstants;
-import org.wso2.carbon.user.core.model.Condition;
-import org.wso2.carbon.user.core.model.ExpressionAttribute;
-import org.wso2.carbon.user.core.model.ExpressionCondition;
-import org.wso2.carbon.user.core.model.ExpressionOperation;
-import org.wso2.carbon.user.core.model.OperationalCondition;
-import org.wso2.carbon.user.core.model.SqlBuilder;
+import org.wso2.carbon.user.core.model.*;
 import org.wso2.carbon.user.core.profile.ProfileConfigurationManager;
 import org.wso2.carbon.user.core.tenant.Tenant;
 import org.wso2.carbon.user.core.util.DatabaseUtil;
@@ -74,6 +69,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import javax.naming.directory.Attributes;
 import javax.sql.DataSource;
 
 import static org.wso2.carbon.user.core.constants.UserCoreErrorConstants.ErrorMessages.ERROR_CODE_DUPLICATE_WHILE_ADDING_A_USER;
@@ -799,6 +795,11 @@ public class JDBCUserStoreManager extends AbstractUserStoreManager {
         }
 
         return names;
+    }
+
+    @Override
+    public UserProfile[] doExportUsers(String filter, int maxItemLimit, String paramAtts) throws UserStoreException {
+        return new UserProfile[0];
     }
 
     /**
