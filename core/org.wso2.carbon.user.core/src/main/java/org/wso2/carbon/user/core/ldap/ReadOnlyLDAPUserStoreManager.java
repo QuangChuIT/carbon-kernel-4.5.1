@@ -1064,6 +1064,9 @@ public class ReadOnlyLDAPUserStoreManager extends AbstractUserStoreManager {
             throw new UserStoreException(
                     "Invalid character sequence entered for user serch. Please enter valid sequence.");
         }
+        // append the domain if exist
+        String domain = this.getRealmConfiguration().getUserStoreProperty(
+                UserCoreConstants.RealmConfig.PROPERTY_DOMAIN_NAME);
 
         StringBuffer searchFilter =
                 new StringBuffer(
@@ -1121,7 +1124,12 @@ public class ReadOnlyLDAPUserStoreManager extends AbstractUserStoreManager {
                             UserProfile profile = new UserProfile();
                             String[] atts = paramAtts.split(",");
                             for(String att : atts) {
-                                profile.getUserProperties().put(att, attribs.get(att) == null ? "" : (String)attribs.get(att).get());
+                                if("uid".equals(att) && !"uid".equals(userNameProperty)) {
+                                    String name = UserCoreUtil.getCombinedName(domain, (String) attribs.get(userNameProperty).get(), null);
+                                    profile.getUserProperties().put(att, name);
+                                } else {
+                                    profile.getUserProperties().put(att, attribs.get(att) == null ? "" : (String) attribs.get(att).get());
+                                }
                             }
                             list.add(profile);
                         }
@@ -2824,6 +2832,30 @@ public class ReadOnlyLDAPUserStoreManager extends AbstractUserStoreManager {
             JNDIUtil.closeContext(dirContext);
             JNDIUtil.closeContext(ldapContext);
         }
+    }
+
+    @Override
+    public boolean doCheckUserIsLocked(String userName) throws UserStoreException {
+//        String claimURI = "http://wso2.org/claims/active";
+//        try {
+//            String userStatus = getClaimAtrribute(claimURI, userName, null);
+//            if(userStatus == null || userStatus.equals("active")) {
+//                return false;
+//            }
+//        } catch (org.wso2.carbon.user.api.UserStoreException ex) {
+//            return true;
+//        }
+        return true;
+    }
+
+    @Override
+    public boolean doCheckRequireChangeExpiryPassword(String userName) throws UserStoreException {
+        return false;
+    }
+
+    @Override
+    public boolean doCheckRequireChangePasswordWhenFirstLogin(String userName) throws UserStoreException {
+        return false;
     }
 
     /**

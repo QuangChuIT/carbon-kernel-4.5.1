@@ -799,7 +799,121 @@ public class JDBCUserStoreManager extends AbstractUserStoreManager {
 
     @Override
     public UserProfile[] doExportUsers(String filter, int maxItemLimit, String paramAtts) throws UserStoreException {
-        return new UserProfile[0];
+        Connection dbConnection = null;
+        String sqlStmt = null;
+        PreparedStatement prepStmt = null;
+        ResultSet rs = null;
+
+        UserProfile[] userProfiles = new UserProfile[0];
+
+        if (maxItemLimit == 0) {
+            return userProfiles;
+        }
+
+        String[] users = new String[0];
+
+        int searchTime = UserCoreConstants.MAX_SEARCH_TIME;
+
+        try {
+            searchTime = Integer.parseInt(realmConfig
+                    .getUserStoreProperty(UserCoreConstants.RealmConfig.PROPERTY_MAX_SEARCH_TIME));
+        } catch (Exception e) {
+            searchTime = UserCoreConstants.MAX_SEARCH_TIME;
+        }
+
+        try {
+            filter = "%";
+
+            List<String> lst = new LinkedList<String>();
+            List<UserProfile> list = new ArrayList<>();
+
+            dbConnection = getDBConnection();
+
+            if (dbConnection == null) {
+                throw new UserStoreException("null connection");
+            }
+            sqlStmt = getUserFilterQuery(JDBCRealmConstants.GET_USER_FILTER,
+                    JDBCCaseInsensitiveConstants.GET_USER_FILTER_CASE_INSENSITIVE);
+
+            prepStmt = dbConnection.prepareStatement(sqlStmt);
+            prepStmt.setString(1, filter);
+            if (sqlStmt.toUpperCase().contains(UserCoreConstants.SQL_ESCAPE_KEYWORD)) {
+                prepStmt.setString(2, SQL_FILTER_CHAR_ESCAPE);
+                if (sqlStmt.contains(UserCoreConstants.UM_TENANT_COLUMN)) {
+                    prepStmt.setInt(3, tenantId);
+                }
+            } else {
+                if (sqlStmt.contains(UserCoreConstants.UM_TENANT_COLUMN)) {
+                    prepStmt.setInt(2, tenantId);
+                }
+            }
+            try {
+                prepStmt.setQueryTimeout(searchTime);
+            } catch (Exception e) {
+                // this can be ignored since timeout method is not implemented
+                log.debug(e);
+            }
+
+            try {
+                rs = prepStmt.executeQuery();
+            } catch (SQLException e) {
+                if (e instanceof SQLTimeoutException) {
+                    log.error("The cause might be a time out. Hence ignored", e);
+                    return userProfiles;
+                }
+                String errorMessage =
+                        "Error while fetching users according to filter : " + filter + " & max Item limit " +
+                                ": " + maxItemLimit;
+                if (log.isDebugEnabled()) {
+                    log.debug(errorMessage, e);
+                }
+                throw new UserStoreException(errorMessage, e);
+            }
+
+            while (rs.next()) {
+
+                String name = rs.getString(1);
+                if (CarbonConstants.REGISTRY_ANONNYMOUS_USERNAME.equals(name)) {
+                    continue;
+                }
+                lst.add(name);
+            }
+            rs.close();
+
+            if (lst.size() > 0) {
+                users = lst.toArray(new String[lst.size()]);
+            }
+
+            Arrays.sort(users);
+            String[] atts = paramAtts.split(",");
+            for(int i = 0; i < users.length ; i++) {
+                UserProfile profile = new UserProfile();
+                for(String att : atts) {
+                    if("uid".equals(att)) {
+                        // append the domain if exist
+                        String domain = realmConfig
+                                .getUserStoreProperty(UserCoreConstants.RealmConfig.PROPERTY_DOMAIN_NAME);
+                        String userName = UserCoreUtil.addDomainToName(users[i], domain);
+                        profile.getUserProperties().put(att, userName);
+                    } else {
+                        String value = getProperty(dbConnection, users[i], att, UserCoreConstants.DEFAULT_PROFILE);
+                        profile.getUserProperties().put(att, value == null ? "" : value);
+                    }
+                }
+                list.add(profile);
+            }
+            userProfiles = list.toArray(new UserProfile[list.size()]);
+        } catch (SQLException e) {
+            String msg = "Error occurred while retrieving users for filter : " + filter + " & max Item limit : " +
+                    maxItemLimit;
+            if (log.isDebugEnabled()) {
+                log.debug(msg, e);
+            }
+            throw new UserStoreException(msg, e);
+        } finally {
+            DatabaseUtil.closeAllConnections(dbConnection, rs, prepStmt);
+        }
+        return userProfiles;
     }
 
     /**
@@ -3755,6 +3869,147 @@ public class JDBCUserStoreManager extends AbstractUserStoreManager {
             result.setSkippedUserCount(getUserListFromPropertiesCount(property, value, profileName));
         }
         return result;
+    }
+
+    @Override
+    public boolean doCheckUserIsLocked(String userName) throws UserStoreException {
+        String claimURI = "http://wso2.org/claims/active";
+        String active = doGetUserClaimValue(userName, claimURI, null);
+        if(active == null || active.equals("false")) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean doCheckRequireChangeExpiryPassword(String userName) throws UserStoreException {
+        Connection dbConnection = null;
+        PreparedStatement prepStmt = null;
+        ResultSet results = null;
+        boolean requireChangePass = false;
+        boolean isImportUser = false;
+        Date passwordChangeTime = null;
+        Date passwordExpiryDate = null;
+        Date currentDate = new Date();
+        try {
+            if(!doCheckUserIsLocked(userName)) {
+                dbConnection = getDBConnection();
+                prepStmt = dbConnection.prepareStatement(JDBCRealmConstants.GET_LAST_DATE_CHANGE_PASSWORD);
+                prepStmt.setString(1, userName);
+                prepStmt.setInt(2, tenantId);
+                results = prepStmt.executeQuery();
+                while (results.next()) {
+                    isImportUser = results.getBoolean(1);
+                    passwordChangeTime = results.getTimestamp(2);
+                    break;
+                }
+                // with import user, password will expiry after 10 day
+                if(isImportUser) {
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(passwordChangeTime);
+                    c.add(Calendar.DATE, 10);
+                    passwordExpiryDate = c.getTime();
+                    if(currentDate.before(passwordExpiryDate)) {
+                        requireChangePass = true;
+                    } else {
+                        // do lock user
+                        doSetUserClaimValue(userName, "http://wso2.org/claims/active", "false", null);
+                    }
+                } else {
+                    // password have to change after 3 month
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(passwordChangeTime);
+                    c.add(Calendar.MONTH, 3);
+                    passwordExpiryDate = c.getTime();
+                    if(currentDate.before(passwordExpiryDate)) {
+                        // before password expiry 10 day, send email notification to user
+                        c.add(Calendar.DATE, -10);
+                        if(currentDate.after(c.getTime())) {
+                            requireChangePass = true;
+                        }
+                    } else {
+                        // do lock user
+                        doSetUserClaimValue(userName, "http://wso2.org/claims/active", "false", null);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            String msg = "Error when check require change password";
+            if (log.isDebugEnabled()) {
+                log.debug(msg, e);
+            }
+            throw new UserStoreException(msg, e);
+        } finally {
+            DatabaseUtil.closeAllConnections(dbConnection);
+        }
+        return requireChangePass;
+    }
+
+    @Override
+    public boolean doCheckRequireChangePasswordWhenFirstLogin(String userName) throws UserStoreException {
+        Connection dbConnection = null;
+        PreparedStatement prepStmt = null;
+        ResultSet results = null;
+        boolean requireChangePass = false;
+        try {
+            if(!doCheckUserIsLocked(userName)) {
+                dbConnection = getDBConnection();
+                prepStmt = dbConnection.prepareStatement(JDBCRealmConstants.CHECK_REQUIRE_CHANGE_PASSWORD);
+                prepStmt.setString(1, userName);
+                prepStmt.setInt(2, tenantId);
+                results = prepStmt.executeQuery();
+                while (results.next()) {
+                    requireChangePass = results.getBoolean(1);
+                }
+            }
+        } catch (SQLException e) {
+            String msg = "Error when check require change password";
+            if (log.isDebugEnabled()) {
+                log.debug(msg, e);
+            }
+            throw new UserStoreException(msg, e);
+        } finally {
+            DatabaseUtil.closeAllConnections(dbConnection);
+        }
+        return requireChangePass;
+    }
+
+    public String doGetUserClaimValue(String userName, String claimURI, String profileName) throws UserStoreException {
+        if (profileName == null) {
+            profileName = UserCoreConstants.DEFAULT_PROFILE;
+        }
+        Connection dbConnection = null;
+        String property = null;
+        try {
+            dbConnection = getDBConnection();
+            property = getClaimAtrribute(claimURI, userName, null);
+            String value = getProperty(dbConnection, userName, property, profileName);
+            return value;
+        } catch (SQLException e) {
+            String msg = "Error when get user property";
+            if (log.isDebugEnabled()) {
+                log.debug(msg, e);
+            }
+            throw new UserStoreException(msg, e);
+        } catch (UserStoreException e) {
+            String errorMessage =
+                    "Error occurred while adding or updating claim value for user : " + userName + " & claim URI : " +
+                            claimURI + " attribute : " + property + " profile : " + profileName;
+            if (log.isDebugEnabled()) {
+                log.debug(errorMessage, e);
+            }
+            throw new UserStoreException(errorMessage, e);
+        } catch (org.wso2.carbon.user.api.UserStoreException e) {
+            String errorMessage =
+                    "Error occurred while getting claim attribute for user : " + userName + " & claim URI : " +
+                            claimURI;
+            if (log.isDebugEnabled()) {
+                log.debug(errorMessage, e);
+            }
+            throw new UserStoreException(errorMessage, e);
+        } finally {
+            DatabaseUtil.closeAllConnections(dbConnection);
+        }
     }
 
     protected PaginatedSearchResult doGetUserList(Condition condition, String profileName, int limit, int offset,

@@ -258,6 +258,14 @@ public final class JDBCRealmConstants {
     public static final String ADD_USER_TO_ROLE_OPENEDGE = "AddUserToRoleSQL-openedge";
     public static final String ADD_ROLE_TO_USER_OPENEDGE = "AddRoleToUserSQL-openedge";
     public static final String ADD_USER_PROPERTY_OPENEDGE = "AddUserPropertySQL-openedge";
+
+    // check account require change password
+    public static final String CHECK_REQUIRE_CHANGE_PASSWORD = "SELECT UM_REQUIRE_CHANGE FROM UM_USER WHERE UM_USER_NAME = ? AND UM_TENANT_ID=?";
+
+    // check account require change password
+    public static final String GET_LAST_DATE_CHANGE_PASSWORD = "SELECT UM_REQUIRE_CHANGE, UM_CHANGED_TIME FROM UM_USER WHERE UM_USER_NAME = ? AND UM_TENANT_ID=?";
+
+
     private JDBCRealmConstants() {
     }
 }

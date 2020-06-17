@@ -26,6 +26,7 @@ import org.wso2.carbon.user.core.UserRealm;
 import org.wso2.carbon.user.core.UserStoreException;
 import org.wso2.carbon.user.core.UserStoreManager;
 import org.wso2.carbon.user.core.claim.Claim;
+import org.wso2.carbon.user.core.model.UserProfile;
 import org.wso2.carbon.user.core.tenant.Tenant;
 
 import java.util.Date;
@@ -429,6 +430,11 @@ public class RegistryUserStoreManager implements UserStoreManager {
      */
     public String[] listUsers(String filter, int maxItemLimit) throws UserStoreException {
         return getUserStoreManager().listUsers(filter, maxItemLimit);
+    }
+
+    @Override
+    public UserProfile[] exportUsers(String filter, int maxItemLimit, String paramAtts) throws UserStoreException {
+        return new UserProfile[0];
     }
 
     /**

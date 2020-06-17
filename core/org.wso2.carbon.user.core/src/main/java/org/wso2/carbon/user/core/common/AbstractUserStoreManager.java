@@ -7145,4 +7145,28 @@ public abstract class AbstractUserStoreManager implements UserStoreManager, Pagi
         // Authenticate using the initial user store from the user store preference list.
         return initialUserStoreManager.authenticate(userName, credential);
     }
+
+    /**
+     * check status of the user with the given user name
+     *
+     * @param userName The user name
+     * @throws UserStoreException An unexpected exception has occurred
+     */
+    public abstract boolean doCheckUserIsLocked(String userName) throws UserStoreException;
+
+    /**
+     * check password expiry
+     *
+     * @param userName The user name
+     * @throws UserStoreException An unexpected exception has occurred
+     */
+    public abstract boolean doCheckRequireChangeExpiryPassword(String userName) throws UserStoreException;
+
+    /**
+     * check the user login first time with the given user name
+     *
+     * @param userName The user name
+     * @throws UserStoreException An unexpected exception has occurred
+     */
+    public abstract boolean doCheckRequireChangePasswordWhenFirstLogin(String userName) throws UserStoreException;
 }

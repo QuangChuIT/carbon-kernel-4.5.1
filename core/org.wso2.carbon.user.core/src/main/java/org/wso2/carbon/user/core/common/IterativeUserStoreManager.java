@@ -234,6 +234,21 @@ public class IterativeUserStoreManager extends AbstractUserStoreManager {
     }
 
     @Override
+    public boolean doCheckUserIsLocked(String userName) throws UserStoreException {
+        return false;
+    }
+
+    @Override
+    public boolean doCheckRequireChangeExpiryPassword(String userName) throws UserStoreException {
+        return false;
+    }
+
+    @Override
+    public boolean doCheckRequireChangePasswordWhenFirstLogin(String userName) throws UserStoreException {
+        return false;
+    }
+
+    @Override
     public String[] getProfileNames(String userName) throws UserStoreException {
 
         return this.abstractUserStoreManager.getProfileNames(userName);
