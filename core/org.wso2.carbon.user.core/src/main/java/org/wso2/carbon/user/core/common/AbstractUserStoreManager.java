@@ -7160,7 +7160,7 @@ public abstract class AbstractUserStoreManager implements UserStoreManager, Pagi
      * @param userName The user name
      * @throws UserStoreException An unexpected exception has occurred
      */
-    public abstract boolean doCheckRequireChangeExpiryPassword(String userName) throws UserStoreException;
+    public abstract int getNumberDayPasswordWillExpiry(String userName) throws UserStoreException;
 
     /**
      * check the user login first time with the given user name

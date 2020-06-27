@@ -2849,8 +2849,8 @@ public class ReadOnlyLDAPUserStoreManager extends AbstractUserStoreManager {
     }
 
     @Override
-    public boolean doCheckRequireChangeExpiryPassword(String userName) throws UserStoreException {
-        return false;
+    public int getNumberDayPasswordWillExpiry(String userName) throws UserStoreException {
+        return Integer.MAX_VALUE;
     }
 
     @Override

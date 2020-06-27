@@ -69,6 +69,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import javax.naming.directory.Attributes;
 import javax.sql.DataSource;
 
@@ -3882,11 +3883,11 @@ public class JDBCUserStoreManager extends AbstractUserStoreManager {
     }
 
     @Override
-    public boolean doCheckRequireChangeExpiryPassword(String userName) throws UserStoreException {
+    public int getNumberDayPasswordWillExpiry(String userName) throws UserStoreException {
         Connection dbConnection = null;
         PreparedStatement prepStmt = null;
         ResultSet results = null;
-        boolean requireChangePass = false;
+        int numberDayExpiry = 0;
         boolean isImportUser = false;
         Date passwordChangeTime = null;
         Date passwordExpiryDate = null;
@@ -3905,16 +3906,13 @@ public class JDBCUserStoreManager extends AbstractUserStoreManager {
                 }
                 // with import user, password will expiry after 10 day
                 if(isImportUser) {
-                    Calendar c = Calendar.getInstance();
-                    c.setTime(passwordChangeTime);
-                    c.add(Calendar.DATE, 10);
-                    passwordExpiryDate = c.getTime();
-                    if(currentDate.before(passwordExpiryDate)) {
-                        requireChangePass = true;
-                    } else {
+                    long diff = currentDate.getTime() - passwordChangeTime.getTime();
+                    int numberDay = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+                    if(numberDay > 10) {
                         // do lock user
                         doSetUserClaimValue(userName, "http://wso2.org/claims/active", "false", null);
                     }
+                    numberDayExpiry = 10 - numberDay;
                 } else {
                     // password have to change after 3 month
                     Calendar c = Calendar.getInstance();
@@ -3922,11 +3920,8 @@ public class JDBCUserStoreManager extends AbstractUserStoreManager {
                     c.add(Calendar.MONTH, 3);
                     passwordExpiryDate = c.getTime();
                     if(currentDate.before(passwordExpiryDate)) {
-                        // before password expiry 10 day, send email notification to user
-                        c.add(Calendar.DATE, -10);
-                        if(currentDate.after(c.getTime())) {
-                            requireChangePass = true;
-                        }
+                        long diff = passwordExpiryDate.getTime() - currentDate.getTime();
+                        numberDayExpiry = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
                     } else {
                         // do lock user
                         doSetUserClaimValue(userName, "http://wso2.org/claims/active", "false", null);
@@ -3942,7 +3937,7 @@ public class JDBCUserStoreManager extends AbstractUserStoreManager {
         } finally {
             DatabaseUtil.closeAllConnections(dbConnection);
         }
-        return requireChangePass;
+        return numberDayExpiry;
     }
 
     @Override
